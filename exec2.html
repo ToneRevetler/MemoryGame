@@ -7,7 +7,6 @@
 </head>
 <body>
     <h1>Jogo da Memória</h1>
-    <h2>teste</h2>
     <article id="gameBoard">
 
         <div class="card back" onclick="tryPlayer(this)" ></div>
@@ -38,6 +37,14 @@
             gameOrder.shift()
         }
 
+        function winner(gameProgress){
+            if(gameProgress >= 4){
+                console.log('BRUNO GAY');
+                document.getElementById('gameBoard').style.display ='none';
+            }
+
+        }
+
         var comparate = []
         var gameProgress = 0
 
@@ -55,6 +62,7 @@
                 comparate = []
                 console.log('ganhou')
                 gameProgress +=1
+                winner(gameProgress);
                 setTimeout(() => {
                     cardSelecteds[0].setAttribute('status' , 'hit')
                     cardSelecteds[1].setAttribute('status' , 'hit')
@@ -70,13 +78,6 @@
                 console.log('errou')
             }
            
-        }
-
-        function winner(gameProgress){
-            if(gameProgress.length == 4){
-                console.log('BRUNO GAY')
-            }
-
         }        
 
 
