@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Jogo da Memória</h1>
+    <article id="gameBoard">
+
+        <div class="card back" onclick="tryPlayer(this)" ></div>
+        <div class="card back" onclick="tryPlayer(this)" ></div>
+        <div class="card back" onclick="tryPlayer(this)" ></div>
+        <div class="card back" onclick="tryPlayer(this)"></div>
+        <div class="card back" onclick="tryPlayer(this)"></div>
+        <div class="card back" onclick="tryPlayer(this)"></div>
+        <div class="card back" onclick="tryPlayer(this)"></div>
+        <div class="card back" onclick="tryPlayer(this)"></div>
+        
+    </article>
+
+    <h2 class='show' >a</h2>
+    <script>
+        let a = 0
+        var gameOrder = [ "vegeta" , "freeza" , "goku", "gohan", "vegeta" , "freeza" , "goku", "gohan" ]
+        gameOrder.sort( (gameOrder , b) => Math.random() -0.5)
+        
+        document.querySelector('.show').textContent = gameOrder
+
+        var cards = Array.from(document.querySelectorAll('.card'))
+        var quantities = gameOrder.length
+        while ( a < quantities){
+            a +=1
+            cards[0].setAttribute('id',gameOrder[0])
+            cards.shift()
+            gameOrder.shift()
+        }
+
+        var comparate = []
+        var gameProgress = 0
+
+        function tryPlayer(btn){
+            if(comparate.length < 2){
+                comparate.push(btn.id)
+                btn.setAttribute('status' , 'selected')
+                while (comparate.length == 2){
+                    comparate.push(btn.id)
+                    btn.setAttribute('status' , 'selected')
+                    tryPlayer()
+                }
+            }else if(comparate[0] == comparate[1] ){
+                let cardSelecteds = Array.from(document.querySelectorAll('div[status="selected"]'))
+                comparate = []
+                console.log('ganhou')
+                gameProgress +=1
+                setTimeout(() => {
+                    cardSelecteds[0].setAttribute('status' , 'hit')
+                    cardSelecteds[1].setAttribute('status' , 'hit')
+                }, 1000);
+               
+            }else{
+                let cardSelecteds = Array.from(document.querySelectorAll('div[status="selected"]'))
+                comparate = []
+                setTimeout(() =>{
+                    cardSelecteds[0].setAttribute('status' , '')
+                    cardSelecteds[1].setAttribute('status' , '')
+                }, 1000)
+                console.log('errou')
+            }
+           
+        }
+
+        function winner(gameProgress){
+            if(gameProgress.length == 4){
+                console.log('BRUNO GAY')
+            }
+
+        }        
+
+
+       
+
+      
+        console.log(cards)
+       
+    </script>
+
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        article{
+            background-color: lightgray;
+            padding: 1rem;
+            border-radius: 10px;
+            width: 40vw;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            
+        }
+        .card{
+            width:  9rem;
+            height: 14rem;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 5px solid white;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+        
+        #freeza{
+            background-image: url('https://zonacritica.com.br/wp-content/uploads/2022/07/69338-o-vil-atilde-o-freeza-pode-ser-visto-em-opengraph_1200-2-e1658960952842.jpg.webp');
+            background-size: cover;
+            background-position: -7.8rem ;
+        }
+
+        #goku{
+            background-image: url('https://conteudo.imguol.com.br/c/entretenimento/1a/2018/02/01/o-personagem-goku-da-animacao-dragon-ball-1517521178505_v2_900x506.jpg');
+            background-size: cover;
+            background-position: -7.5rem ;
+        }
+
+        #vegeta{
+            background-image: url('https://www.fatosdesconhecidos.com.br/wp-content/uploads/2017/12/1457287_1424148594320_full-1280x800.jpg');
+            background-size: cover;
+            background-position: -5rem ;
+        }
+
+        #gohan{
+            background-image: url('https://criticalhits.com.br/wp-content/uploads/2022/09/dragon-ball-z-episodio-gohan-ssj2.jpg');
+            background-size: cover;
+            background-position: -7.5rem ;
+        }
+        
+        div:not([status="selected"]){
+            background-image: url('https://orig00.deviantart.net/9c03/f/2013/196/d/3/yugioh_card_back_v2_by_endergon_oscuro-d6dlsyg.jpg') !important;
+            background-size: cover;
+           
+        }  
+
+        div[status="hit"]{
+            background-image: url('https://img.freepik.com/fotos-gratis/fundo-abstrato-escuro_1048-1920.jpg?size=338&ext=jpg&ga=GA1.1.1687694167.1711670400&semt=ais') !important;
+        }
+
+    </style>
+</body>
+</html>
